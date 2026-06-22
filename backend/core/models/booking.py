@@ -1,8 +1,11 @@
-from sqlalchemy import String, UniqueConstraint, func, text
+from sqlalchemy import String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
-from .base_model import Base
 from datetime import datetime as time
-class Booking(Base):
+from .mixins.int_id_pk import IntIdPkMixin
+from .base_model import Base
+
+
+class Booking(IntIdPkMixin, Base):
     name: Mapped[str] = mapped_column(String(50))
     datetime: Mapped[time] 
     service_type: Mapped[str] 
