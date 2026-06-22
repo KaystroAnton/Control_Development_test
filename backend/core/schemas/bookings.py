@@ -1,15 +1,23 @@
-from pydantic import BaseModel
+from typing import Optional
+
+from pydantic import BaseModel, Field
 from datetime import  datetime as time
 from pydantic import ConfigDict
+from enum import Enum
+
+class Booking_Status(str, Enum):
+    PENDING = "pending"
+    CONFIRMED = "confirmed"
+    FAILD = "failed"
 
 class BookingBase(BaseModel):
     name: str 
-    datetime: time = time.now()
+    datetime: time = Field(time.now())
     service_type: str 
-    status: str
+    status: Optional[Booking_Status] = Booking_Status.PENDING
 
 class BookingCreate(BookingBase):
-    pass
+    datetime: time = Field(time.now(), ge=time.now())
 
 class BookingRead(BookingBase):
     model_config = ConfigDict(
